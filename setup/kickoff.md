@@ -1,6 +1,6 @@
 # Kickoff
 
-Three opening moves, taken from the [worked example](../example/session_log.md). They take about five minutes and set up the rest of the session.
+Three opening moves, taken from the [take-home example](../example/take-home/session_log.md). They take about five minutes and set up the rest of the session.
 
 ## 1. Scope check
 

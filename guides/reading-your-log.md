@@ -1,6 +1,6 @@
 # Reading your log
 
-AI is supposed to co-build. It drafts, spitballs, and fills gaps, and it will usually write most of the words. That's the point. So the useful question isn't "who did more," it's "where did the result depend on me?" These questions get at that. Answers from the [worked example](../example/session_log.md) are in italics.
+AI is supposed to co-build. It drafts, spitballs, and fills gaps, and it will usually write most of the words. That's the point. So the useful question isn't "who did more," it's "where did the result depend on me?" These questions get at that. Answers from the [take-home example](../example/take-home/session_log.md) are in italics.
 
 ## 1. Where did it depend on you?
 

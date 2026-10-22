@@ -12,9 +12,28 @@ The hard part is seeing where yours depended on you. Memory is generous to whoev
 
 The AI will probably write most of the words. The log shows the forks: the constraints you set, the calls you made, and the corrections you caught, which together sent the result your way and not somewhere else.
 
-## What it found the first time
+## What it looks like
 
-The [worked example](example/) is a timed PM take-home: 137 minutes, 15 prompts, 7 course-corrections.
+Every log opens with a summary. This one is from a 12-minute session planning a team offsite, built after the fact from the transcript ([full example](example/offsite-plan/)):
+
+> H made every call that shaped the plan (drive instead of fly, the agenda structure, the memo format, the at-a-glance block). The AI supplied every specific in it: the place, the dates, the deadline and every number. Most of those are still unchecked estimates, and both course-corrections came after a format or reading the AI chose without asking.
+
+| | |
+|---|---|
+| Time | 11:51 elapsed: 6:20 active, 5:31 reading and thinking between turns |
+| Prompts | 12 |
+| Forks (where the result depended on the human) | 9 |
+| Course-corrections (⚠) | 2 (0 repeats) |
+| Who originated what (timeline rows) | H 11 · ⚠ H 2 · H→AI 5 · AI→H 2 · AI 15 |
+| Unasked AI decisions | 15 |
+| AI errors | 3, no time lost |
+| Still unverified | 4: budget figures and prices · drive times · where the team is based · the "Why" line |
+
+It also caught a line in the finished memo, written in the human's voice, claiming research nobody did ("I also looked at Half Moon Bay … and Monterey"), and the AI overstating its own active time (8 minutes against 6:20). The log the AI kept live during the same session missed both.
+
+### Over a longer session
+
+A timed PM take-home, logged live: 137 minutes, 15 prompts, 7 course-corrections ([full example](example/take-home/)).
 
 - **6 of 7 corrections were about form, not substance.**
 - **About 20 of 77 active minutes went to the actual problem.** Most of the rest was restructuring after the content had stopped changing.
@@ -22,29 +41,6 @@ The [worked example](example/) is a timed PM take-home: 137 minutes, 15 prompts,
 - **The AI wrote "done" into the log before checking its own output**, then caught it and corrected the entry.
 
 None of that is visible in the finished deliverable. All of it is visible in the log.
-
-## How it works
-
-Every log entry gets a **layer** and a **tag**.
-
-| Layer | What it covers |
-|---|---|
-| **WORK** | The problem itself: the analysis, the decisions, the content |
-| **PROCESS** | How you ran the session: setup, tooling, prompting, steering, time |
-
-| Tag | Meaning |
-|---|---|
-| **H** | Your idea, decision, or direction |
-| **AI** | The model's contribution |
-| **H→AI** | You directed, the AI executed |
-| **AI→H** | The AI proposed, you decided |
-| **⚠ H** | You overrode or redirected the AI (a course-correction) |
-
-Course-corrections are the most valuable part. Each one records what the AI was optimizing for, what you were optimizing for, and the pattern. Over a session those patterns show you where you add value and where the AI reliably drifts.
-
-Three markers flag patterns worth counting: *unasked* (the AI decided something you didn't ask it to), *repeat* (a correction you've made before), and *reintroduced* (something you removed came back).
-
-The tags are the AI's reading of the session, not a verdict. Every prompt is logged verbatim, so you can check any tag against what was actually said, and correct it.
 
 ## Quickstart
 
@@ -94,6 +90,29 @@ The AI keeps the log as you go. It costs more, but the instructions also change 
 | Changes how the session runs | No. The AI doesn't know it's being logged | Yes: outline first, options at forks, drift anchoring |
 | Blind spots | Anything that never reached the chat. The AI asks you about these | What the AI forgets to log |
 
+## How it works
+
+Every log entry gets a **layer** and a **tag**.
+
+| Layer | What it covers |
+|---|---|
+| **WORK** | The problem itself: the analysis, the decisions, the content |
+| **PROCESS** | How you ran the session: setup, tooling, prompting, steering, time |
+
+| Tag | Meaning |
+|---|---|
+| **H** | Your idea, decision, or direction |
+| **AI** | The model's contribution |
+| **H→AI** | You directed, the AI executed |
+| **AI→H** | The AI proposed, you decided |
+| **⚠ H** | You overrode or redirected the AI (a course-correction) |
+
+Course-corrections are the most valuable part. Each one records what the AI was optimizing for, what you were optimizing for, and the pattern. Over a session those patterns show you where you add value and where the AI reliably drifts.
+
+Three markers flag patterns worth counting: *unasked* (the AI decided something you didn't ask it to), *repeat* (a correction you've made before), and *reintroduced* (something you removed came back).
+
+The tags are the AI's reading of the session, not a verdict. Every prompt is logged verbatim, so you can check any tag against what was actually said, and correct it.
+
 ## What's in here
 
 | Path | What it is |
@@ -106,7 +125,7 @@ The AI keeps the log as you go. It costs more, but the instructions also change 
 | [`setup/kickoff.md`](setup/kickoff.md) | The opening moves that set up a session well |
 | [`guides/reading-your-log.md`](guides/reading-your-log.md) | Where it depended on you, the default-path comparison, and spotting drift |
 | [`guides/use-cases.md`](guides/use-cases.md) | Assessments, project work, debugging, learning, writing, coding (untested) |
-| [`example/`](example/) | A real session, sanitized |
+| [`example/`](example/) | Two real sessions, sanitized: one logged both ways, one long session logged live |
 
 ## Principles
 
@@ -124,7 +143,7 @@ Because the log is timestamped, it can show when an AI starts to slide over a lo
 
 I'm a product manager, not an engineer. This has been tested on two kinds of session: a timed analysis-and-writing exercise and a short planning task. It works for those. Everything below is an open question, not a feature. Try it, break it, and tell me what happened.
 
-- **After the fact on long sessions.** Tested on two short sessions so far by building logs from their transcripts and comparing them with the logs kept live. The after-the-fact logs found the same course-corrections and *unasked* decisions, with exact times instead of estimates. One also caught the AI overstating its own active time, which the live log had taken at its word. Long sessions are untested. The condenser cuts each tool call to one line and drops tool output, so a session of a few hundred turns should still fit, but that's unproven.
+- **After the fact on long sessions.** Tested on two short sessions so far by building logs from their transcripts and comparing them with the logs kept live ([one is the offsite example](example/offsite-plan/)). Long sessions are untested. The condenser cuts each tool call to one line and drops tool output, so a session of a few hundred turns should still fit, but that's unproven.
 - **Heavy coding sessions.** Untested. After the fact removes the main friction (logging every event over hundreds of tool calls), and the skill offers to git-ignore its files when the folder is a repo. Still open: whether one line per tool call is the right grain for agentic runs.
 - **macOS and Linux.** Built and tested on Windows. The script is plain Python and should work anywhere Claude Code does, but hasn't been run there yet.
 - **Retrospective as a PR note.** A short "how AI was used" section in a pull request.
