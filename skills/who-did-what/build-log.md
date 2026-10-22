@@ -14,7 +14,8 @@ You're reviewing a finished working session between a human (H) and an AI. You w
 - Everything comes from the transcript. If it isn't in there, it doesn't go in the log. Don't guess what the human was thinking.
 - Where the AI in the transcript describes its own work ("I checked…", "about 8 minutes active", "logged as your call"), check the claim against what actually happened. Don't take its word.
 - If the session was already being logged live, ignore the AI's edits to its own log. They aren't part of the work. What it says about its log in chat is a claim like any other: check it.
-- If the transcript leaves out what the AI wrote (file contents, the deliverable), read the final output files if you have them. If you don't, say in the log what you couldn't see.
+- If the transcript leaves out what the AI wrote (file contents, the deliverable), you may read the final output files if they're in the session's own folder. Don't go looking anywhere else (other folders, connected apps, the web) to fill gaps or check claims. Say in the log what you couldn't see, and ask if it matters.
+- A long gap between turns is just a gap. Don't investigate what happened in it; ask if the answer would change the log.
 - Keep it proportionate. A short session gets a short log.
 
 **Time**
