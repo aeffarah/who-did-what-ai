@@ -9,6 +9,7 @@ The log format stays the same. What changes is what the WORK layer covers, who r
 | **Debugging** | Hypotheses, checks, what was ruled out | Whoever picks it up next | The ruled-out list is a hand-off packet; it saves the next person repeating your checks |
 | **Learning a new domain** | Concepts and claims | You | Plausible-sounding claims you can't yet judge. Tag every one to verify |
 | **Writing** | The draft | You or an editor | Form corrections will dominate. Check whether the ideas are still yours after the rounds |
+| **Coding (untested)** | Design calls, rejected approaches, conventions enforced | Your team, often as a PR note | Overhead in long agentic sessions. See [Status](../README.md#status-mvp) and tell us how it goes |
 | **Portfolio evidence** | Whatever you built | Hiring managers, peers | A strengths-only log reads as marketing. The weaknesses are what make it credible |
 
 ## Picking a size

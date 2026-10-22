@@ -2,6 +2,8 @@
 
 > Ever wonder if you're actually doing anything, or if it's just your AI? Log a session, tag every idea and decision to you or the model, and record every time you had to step in. At the end you'll know who did the thinking, and you'll have the receipts.
 
+**Status: MVP.** Plain Markdown, no install. [What's tested and what isn't.](#status-mvp)
+
 ## Why
 
 AI should be co-building: drafting, spitballing, filling gaps. That's the point. But the result still depends on who's steering. Give the same tool to a hundred people and you get a hundred different outcomes.
@@ -60,7 +62,7 @@ The tags are the AI's reading of the session, not a verdict. Every prompt is log
 | [`setup/instructions.md`](setup/instructions.md) | Drop-in instructions that make the AI keep the log |
 | [`setup/kickoff.md`](setup/kickoff.md) | The opening moves that set up a session well |
 | [`guides/reading-your-log.md`](guides/reading-your-log.md) | Where it depended on you, the default-path comparison, and spotting drift |
-| [`guides/use-cases.md`](guides/use-cases.md) | Assessments, project work, debugging, learning, writing |
+| [`guides/use-cases.md`](guides/use-cases.md) | Assessments, project work, debugging, learning, writing, coding (untested) |
 | [`example/`](example/) | A real session, sanitized |
 
 ## Principles
@@ -74,6 +76,17 @@ The tags are the AI's reading of the session, not a verdict. Every prompt is log
 ## Drift (experimental)
 
 Because the log is timestamped and lives on disk, it can show when an AI starts to slide over a long session: repeated corrections, things you removed coming back, constraints that stop being followed. The instructions also use the log as an anchor, with the AI re-reading your constraints and corrections before every revision. This part is untested on long sessions. If you run one, your log is the evidence it needs. See [spotting drift](guides/reading-your-log.md#spotting-drift-experimental).
+
+## Status: MVP
+
+I'm a product manager, not an engineer. This has been tested on two kinds of session: a timed analysis-and-writing exercise and a short planning task. It works for those. Everything below is an open question, not a feature. Try it, break it, and tell me what happened.
+
+- **Heavy coding sessions.** Untested. Likely friction: logging every event gets expensive over hundreds of tool calls, and the log could eat the context it's meant to protect. "Outline first, then wait" conflicts with letting an agent run, and a log in the repo root ends up in commits. Some ideas: a light mode that logs only your turns, forks and corrections; a git-ignored log folder; commit hashes instead of descriptions of edits.
+- **Post-hoc logging.** Build the log from a saved transcript after the session instead of live. There's no overhead, and the AI doesn't know it's being watched.
+- **Retrospective as a PR note.** A short "how AI was used" section in a pull request.
+- **Drift over long sessions.** See [above](#drift-experimental).
+
+If you try it on a kind of session I haven't, especially coding, open an issue with what broke or what you'd add. Or fork it and make your own version; that's the point of making it public.
 
 ## Works with
 
