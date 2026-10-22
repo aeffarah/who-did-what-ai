@@ -1,14 +1,14 @@
 # who-did-what-ai
 
-> Ever wonder if you're actually doing anything, or if it's just your AI? Log a session, tag every idea and decision to you or the model, and record every time you had to step in. At the end you'll know who did the thinking, and you'll have the receipts.
+> Ever wonder if you're actually doing anything, or if it's just your AI? Work normally, then turn the transcript into a log that tags every idea and decision to you or the model and records every time you had to step in. You'll know who did the thinking, and you'll have the receipts.
 
-**Status: MVP.** Plain Markdown, no install. [What's tested and what isn't.](#status-mvp)
+**Status: MVP.** Plain Markdown plus one small Python script. [What's tested and what isn't.](#status-mvp)
 
 ## Why
 
 AI should be co-building: drafting, spitballing, filling gaps. That's the point. But the result still depends on who's steering. Give the same tool to a hundred people and you get a hundred different outcomes.
 
-The hard part is seeing where yours depended on you. Memory is generous to whoever is doing the remembering, and a raw transcript is accurate but nobody will read it. This sits in between: a running log the AI keeps while you work, tagged by who contributed what, then distilled into a one-page retrospective.
+The hard part is seeing where yours depended on you. Memory is generous to whoever is doing the remembering, and a raw transcript is accurate but nobody will read it. This sits in between: a log built from your session, tagged by who contributed what, then distilled into a one-page retrospective.
 
 The AI will probably write most of the words. The log shows the forks: the constraints you set, the calls you made, and the corrections you caught, which together sent the result your way and not somewhere else.
 
@@ -48,20 +48,60 @@ The tags are the AI's reading of the session, not a verdict. Every prompt is log
 
 ## Quickstart
 
+There are two ways to run it. Start with after the fact: there's nothing to set up and no overhead while you work.
+
+### After the fact (recommended)
+
+**Claude Code**
+
+1. **Install the skill once.** It needs Python 3 (standard library only). From the folder you cloned this repo into:
+
+   ```sh
+   # macOS / Linux
+   mkdir -p ~/.claude/skills && cp -r skills/who-did-what ~/.claude/skills/
+   ```
+   ```powershell
+   # Windows (PowerShell)
+   Copy-Item -Recurse skills\who-did-what "$HOME\.claude\skills\"
+   ```
+
+   If `/who-did-what` isn't recognized afterwards, start a new Claude Code session.2. **Work normally.** No setup, no instructions, no logging.
+3. **When you're done, run `/who-did-what`**, either at the end of that session or in a new session in the same folder. It finds the session's transcript, condenses it with real timestamps, builds the log, and asks you up to three questions the transcript can't answer.
+4. **Ask for the retrospective**, then go through [reading your log](guides/reading-your-log.md).
+
+Claude Code deletes transcripts after 30 days by default, so build the log within a month.
+
+**Any other assistant**
+
+Copy the conversation out of the chat, open a fresh one, and paste in the conversation plus everything below the line in [`build-log.md`](skills/who-did-what/build-log.md). Chat exports usually have no timestamps, so times become prompt numbers.
+
+### Live
+
+The AI keeps the log as you go. It costs more, but the instructions also change how the session runs: the AI outlines before it drafts, offers options at decision points, and re-reads your constraints before every revision to resist [drift](#drift-experimental). Use it when you want those, or when a transcript won't be available.
+
 1. **Copy [`template/`](template/)** into a fresh folder for the session.
 2. **Give your AI the instructions** in [`setup/instructions.md`](setup/instructions.md). Use `CLAUDE.md` for Claude Code, `AGENTS.md`, custom instructions, or just paste it as your first message. Your global instructions and connectors still load, so if they have opinions about where output goes, the session instructions settle it.
 3. **Start a timer** and open with the [kickoff moves](setup/kickoff.md).
 4. **Work normally.** The AI logs each turn. Correct it when a tag is wrong, since a mis-tagged entry is itself worth logging.
 5. **At the end, ask for the retrospective**, then go through [reading your log](guides/reading-your-log.md).
 
+| | After the fact | Live |
+|---|---|---|
+| Setup | Copy one folder, once | Template and instructions, every session |
+| Cost while you work | None | The AI updates the log every turn. In one test, 14 of 39 tool calls were the AI writing its own log and notes |
+| Timestamps | Exact, from the transcript (Claude Code) | The AI's estimates |
+| Changes how the session runs | No. The AI doesn't know it's being logged | Yes: outline first, options at forks, drift anchoring |
+| Blind spots | Anything that never reached the chat. The AI asks you about these | What the AI forgets to log |
+
 ## What's in here
 
 | Path | What it is |
 |---|---|
+| [`skills/who-did-what/`](skills/who-did-what/) | After the fact: the Claude Code skill, the transcript condenser, and the prompt that builds the log |
 | [`template/session_log.md`](template/session_log.md) | The full record: timeline, verbatim prompts, corrections, attribution, time |
 | [`template/retrospective.md`](template/retrospective.md) | The one-page version you share |
 | [`template/working_notes.md`](template/working_notes.md) | Scratchpad for the work itself, kept out of the log |
-| [`setup/instructions.md`](setup/instructions.md) | Drop-in instructions that make the AI keep the log |
+| [`setup/instructions.md`](setup/instructions.md) | Live: drop-in instructions that make the AI keep the log |
 | [`setup/kickoff.md`](setup/kickoff.md) | The opening moves that set up a session well |
 | [`guides/reading-your-log.md`](guides/reading-your-log.md) | Where it depended on you, the default-path comparison, and spotting drift |
 | [`guides/use-cases.md`](guides/use-cases.md) | Assessments, project work, debugging, learning, writing, coding (untested) |
@@ -72,19 +112,19 @@ The tags are the AI's reading of the session, not a verdict. Every prompt is log
 - **The log is not the deliverable.** The log is for you. The retrospective is for your reader. Don't ship the audit trail; one page, with the full log available on request.
 - **Tag honestly, including against yourself.** If the AI had the idea first, it's tagged AI, and an idea you both reached is noted as convergent.
 - **Corrections are the data.** A session with no ⚠ entries either went perfectly or wasn't logged honestly.
-- **Verify before "done."** The AI doesn't record a result until it has checked it.
+- **Verify before "done."** Nothing counts as finished until it's been checked. When the AI claims it was before checking, that's logged as an error.
 - **Your clock is authoritative.** Active time and time spent reading between turns are counted separately.
 
 ## Drift (experimental)
 
-Because the log is timestamped and lives on disk, it can show when an AI starts to slide over a long session: repeated corrections, things you removed coming back, constraints that stop being followed. The instructions also use the log as an anchor, with the AI re-reading your constraints and corrections before every revision. This part is untested on long sessions. If you run one, your log is the evidence it needs. See [spotting drift](guides/reading-your-log.md#spotting-drift-experimental).
+Because the log is timestamped, it can show when an AI starts to slide over a long session: repeated corrections, things you removed coming back, constraints that stop being followed. Both modes can spot this. Live mode also tries to prevent it, using the log on disk as an anchor: the AI re-reads your constraints and corrections before every revision. This part is untested on long sessions. If you run one, your log is the evidence it needs. See [spotting drift](guides/reading-your-log.md#spotting-drift-experimental).
 
 ## Status: MVP
 
 I'm a product manager, not an engineer. This has been tested on two kinds of session: a timed analysis-and-writing exercise and a short planning task. It works for those. Everything below is an open question, not a feature. Try it, break it, and tell me what happened.
 
-- **Heavy coding sessions.** Untested. Likely friction: logging every event gets expensive over hundreds of tool calls, and the log could eat the context it's meant to protect. "Outline first, then wait" conflicts with letting an agent run, and a log in the repo root ends up in commits. Some ideas: a leaner version of the [Light size](guides/use-cases.md#picking-a-size) that logs only your turns, forks and corrections; a git-ignored log folder; commit hashes instead of descriptions of edits.
-- **Post-hoc logging.** Build the log from a saved transcript after the session instead of live. There's no overhead, and the AI doesn't know it's being watched.
+- **After the fact on long sessions.** Tested on two short sessions so far by building logs from their transcripts and comparing them with the logs kept live. The after-the-fact logs found the same course-corrections and *unasked* decisions, with exact times instead of estimates. One also caught the AI overstating its own active time, which the live log had taken at its word. Long sessions are untested. The condenser cuts each tool call to one line and drops tool output, so a session of a few hundred turns should still fit, but that's unproven.
+- **Heavy coding sessions.** Untested. After the fact removes the main friction (logging every event over hundreds of tool calls). Still open: a log in the repo root ends up in commits, so write it somewhere git-ignored; and whether one line per tool call is the right grain for agentic runs.
 - **Retrospective as a PR note.** A short "how AI was used" section in a pull request.
 - **Drift over long sessions.** See [above](#drift-experimental).
 
@@ -92,7 +132,7 @@ If you try it on a kind of session I haven't, especially coding, open an issue w
 
 ## Works with
 
-Built and tested with [Claude Code](https://claude.com/claude-code). Everything is plain Markdown, so any assistant that can edit files works. In a plain chat without file access, the AI ends each reply with the new log rows and you paste them into your copy.
+Built and tested with [Claude Code](https://claude.com/claude-code), which saves transcripts with timestamps, so after the fact works best there. Everything else is plain Markdown, so any assistant works: paste a copied conversation into [`build-log.md`](skills/who-did-what/build-log.md), or for live mode in a chat without file access, the AI ends each reply with the new log rows and you paste them into your copy.
 
 ## License
 
