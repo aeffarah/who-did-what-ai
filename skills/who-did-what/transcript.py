@@ -14,6 +14,7 @@ Usage:
     python transcript.py --list [<folder>] # list sessions, newest first, with start time and first prompt
     python transcript.py ... -o transcript.md
     python transcript.py ... --inputs 400  # also show what the AI wrote, clipped
+    python transcript.py ... --results 3   # also show the last lines of each command's output
 
 Standard library only. Python 3.8+.
 """
@@ -39,6 +40,9 @@ COMMAND_ARGS = re.compile(r"<command-args>(.*?)</command-args>", re.S)
 INTERRUPT = re.compile(r"^\[Request interrupted by user[^\]]*\]$")
 REJECTED = "The user doesn't want to proceed with this tool use"
 REJECT_REASON = re.compile(r"reason for the rejection:\s*(.*)", re.S)
+# Tools whose output is evidence for claims like "the tests pass". Other tools' results are
+# mostly file contents and search hits, which --inputs and the files themselves cover.
+SHELL_TOOLS = {"Bash", "PowerShell"}
 
 
 def project_dir_for(folder):
@@ -117,8 +121,9 @@ def describe_tool(name, inp):
     return f"{name}: {one_line(detail, 100)}" if detail else name
 
 
-def events(path, input_chars=0):
+def events(path, input_chars=0, result_lines=0):
     """Yield (time, kind, text) in transcript order."""
+    tool_names = {}
     with open(path, encoding="utf-8") as fh:
         for line in fh:
             try:
@@ -157,6 +162,10 @@ def events(path, input_chars=0):
                             yield t, "rejected", reason.group(1) if reason else ""
                         elif b.get("is_error"):
                             yield t, "error", text
+                        elif result_lines and tool_names.get(b.get("tool_use_id")) in SHELL_TOOLS:
+                            lines = [l for l in NOISE_TAGS.sub("", text).splitlines() if l.strip()]
+                            if lines:
+                                yield t, "result", "\n".join(clip(l, 200) for l in lines[-result_lines:])
                     elif b.get("type") == "text":
                         raw = b.get("text", "")
                         cmd = COMMAND_NAME.search(raw)
@@ -179,6 +188,7 @@ def events(path, input_chars=0):
                     if b.get("type") == "text" and b.get("text", "").strip():
                         yield t, "reply", b["text"]
                     elif b.get("type") == "tool_use":
+                        tool_names[b.get("id")] = b.get("name")
                         line = describe_tool(b.get("name", "tool"), b.get("input"))
                         payload = tool_payload(b.get("input"), input_chars)
                         if payload:
@@ -194,8 +204,8 @@ def minutes(seconds):
     return f"{seconds / 60:.0f} min"
 
 
-def render(path, max_reply, input_chars):
-    evs = list(events(path, input_chars))
+def render(path, max_reply, input_chars, result_lines):
+    evs = list(events(path, input_chars, result_lines))
     timed = [t for t, _, _ in evs if t]
     if not timed:
         sys.exit(f"No conversation found in {path}")
@@ -232,6 +242,9 @@ def render(path, max_reply, input_chars):
         elif kind == "error":
             out.append(f"- `{fmt(t)}` ✗ tool error · {one_line(text, 200)}")
             last_ai = t
+        elif kind == "result":
+            out.append("  ↳ output, last lines:\n\n  ```\n" + "\n".join("  " + l for l in text.splitlines()) + "\n  ```\n")
+            last_ai = t
         elif kind == "rejected":
             n_correct["rejected"] += 1
             reason = f": \"{one_line(text, 600)}\"" if text.strip() else ""
@@ -257,7 +270,9 @@ def render(path, max_reply, input_chars):
         f"**Gaps:** about {minutes(gap_total)} between the AI finishing and the human's next prompt "
         f"(reading, reviewing, thinking, typing)",
         "",
-        "> Condensed: tool results are omitted except errors, and tool calls are one line each"
+        "> Condensed: tool results are omitted except errors"
+        + (f" and the last {result_lines} lines of each command's output" if result_lines else "")
+        + ", and tool calls are one line each"
         + (f", with what the AI wrote clipped to {input_chars} characters" if input_chars else "")
         + ". Review before sharing: transcripts can contain file contents, paths and secrets.",
     ]
@@ -272,6 +287,8 @@ def main():
     ap.add_argument("--max-reply", type=int, default=3000, help="clip each AI reply to this many characters (0 = no limit)")
     ap.add_argument("--inputs", type=int, default=0, metavar="N",
                     help="also show what the AI wrote in each tool call (file contents, edits, commands), clipped to N characters")
+    ap.add_argument("--results", type=int, default=0, metavar="N",
+                    help="also show the last N lines of each shell command's output (Bash, PowerShell)")
     args = ap.parse_args()
 
     target = Path(args.target).expanduser()
@@ -298,7 +315,7 @@ def main():
             return
         session = found[0]
 
-    text = render(session, args.max_reply, args.inputs)
+    text = render(session, args.max_reply, args.inputs, args.results)
     if args.output:
         Path(args.output).write_text(text, encoding="utf-8")
         print(f"Wrote {args.output} from {session}", file=sys.stderr)

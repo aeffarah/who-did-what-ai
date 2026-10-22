@@ -14,7 +14,9 @@ You're reviewing a finished working session between a human (H) and an AI. You w
 - Everything comes from the transcript. If it isn't in there, it doesn't go in the log. Don't guess what the human was thinking.
 - Where the AI in the transcript describes its own work ("I checked…", "about 8 minutes active", "logged as your call"), check the claim against what actually happened. Don't take its word.
 - If the session was already being logged live, ignore the AI's edits to its own log. They aren't part of the work. What it says about its log in chat is a claim like any other: check it.
-- If the transcript leaves out what the AI wrote (file contents, the deliverable), you may read the final output files if they're in the session's own folder. Don't go looking anywhere else (other folders, connected apps, the web) to fill gaps or check claims. Say in the log what you couldn't see, and ask if it matters.
+- If the transcript includes the last lines of each command's output, check the AI's claims about what it ran ("16 tests pass", "nothing secret was staged") against them. A claim whose evidence isn't in the transcript is unverified: say so.
+- If the transcript clips what the AI wrote (file contents, the deliverable), you may open the files it wrote or edited, by the paths the transcript names, if they're in the session's own folder. That's the only reason to open a file. Don't search the folder, open files the session didn't write, or look anywhere else (other folders, connected apps, the web) to fill gaps or check claims. Say in the log what you couldn't see, and ask if it matters.
+- Refer to the human as H or "they", unless the transcript shows how they refer to themselves. Don't infer it from a name.
 - Judge each moment by what was true then. Don't check the machine's current state (installed software, settings, files outside the session's folder) to decide whether something in the transcript was right; it may have changed since.
 - A long gap between turns is just a gap. Don't investigate what happened in it; ask if the answer would change the log.
 - Keep it proportionate. A short session gets a short log.
