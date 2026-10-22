@@ -51,6 +51,6 @@ This session is logged. Keep `session_log.md` current from the first message to 
 - In a plain chat with no file access, end each reply with the new log rows in a code block, and the human pastes them into their copy of `session_log.md`. Keep everything else the same.
 
 **At the end**
-- Fill in the Attribution summary, Observations (strengths and weaknesses, each tied to a timestamp) and the Time summary.
+- Fill in the Attribution summary, Observations (strengths and weaknesses, each tied to a timestamp) and the Time summary. Then fill in At a glance, counting every number from the log, and open your reply with it.
 - In the Attribution summary, list the forks: the points where the result went one way because of the human (a constraint, a call, a correction). Expect the AI to have written most of the words; the forks are what show where the result depended on the human.
 - When asked, draft `retrospective.md`: one page, for the reader, built only from what the log shows. The log stays as the full record. Don't put audit-trail material in the deliverable.

@@ -5,6 +5,21 @@
 **Goal:** <one line: what this session is meant to produce>  
 **Purpose:** The full record behind the retrospective. Not the deliverable.
 
+## At a glance
+
+<!-- Filled in at the end, for someone who reads nothing else. One sentence with the headline finding, then the table. Every number is counted from the sections below. -->
+
+| | |
+|---|---|
+| Time | N min elapsed: N active, N reading and thinking between turns |
+| Prompts | N |
+| Forks (where the result depended on the human) | N |
+| Course-corrections (⚠) | N (N repeats) |
+| Who originated what (timeline rows) | H N · H→AI N · AI→H N · AI N |
+| Unasked AI decisions | N |
+| AI errors | N, about N min lost |
+| Still unverified | N: name them in a few words each |
+
 ## Tags
 
 - **WORK**: the problem itself

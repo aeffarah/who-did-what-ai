@@ -44,16 +44,29 @@ You're reviewing a finished working session between a human (H) and an AI. You w
 
 **Write `session_log.md` with these sections**
 1. Header: session name, start time, goal (one line, from the human's own words), and "Built after the fact from a transcript."
-2. **Timeline**: a table of Elapsed | Clock | Layer | Who | What happened. One row per meaningful event, not per tool call.
-3. **Prompts (verbatim)**: every human prompt exactly as written, typos included, numbered, with its time. Include mid-turn messages and rejection reasons, and mark them as such.
-4. **Constraints**: what the human said the output must reflect (style, standards, audience, limits). Tag H.
-5. **Course-corrections (⚠)**: one numbered entry per ⚠ row.
-6. **Attribution summary**: first the **forks**, the points where the result went one way because of the human (a constraint, a call, a correction). Expect the AI to have written most of the words; the forks are what show where the result depended on the human. Then **H** (the human's other contributions), **AI**, and anything unresolved.
-7. **Observations**: strengths and weaknesses for both sides, each tied to a time. A strengths-only list isn't honest.
-8. **Time summary**: phases with window, minutes and layer, then active time and gap time as separate totals. Gaps are the time between the AI finishing and the human's next prompt: reading, reviewing, thinking and typing. Compute them from the timestamps; a total in the transcript header is a rounded cross-check.
-9. **What the transcript can't show**: one or two lines. Work done outside the chat, what the human read or decided offline, anything that shaped the result but left no trace here.
+2. **At a glance**: for someone who reads nothing else. One sentence with the headline finding, then this table, with every number counted from the sections below:
 
-**Then ask the human.** End your reply with at most three short questions the transcript can't settle, picking the ones whose answers would change the log most: a tag, a correction, or an open fact the result depends on. For example: "At 14:03, had you already planned the one-page limit, or did the draft prompt it?" Update the log with the answers. If the human skips them, leave the log as is.
+   | | |
+   |---|---|
+   | Time | N min elapsed: N active, N reading and thinking between turns |
+   | Prompts | N |
+   | Forks (where the result depended on the human) | N |
+   | Course-corrections (⚠) | N (N repeats) |
+   | Who originated what (timeline rows) | H N · H→AI N · AI→H N · AI N |
+   | Unasked AI decisions | N |
+   | AI errors | N, about N min lost |
+   | Still unverified | N: name them in a few words each |
+
+3. **Timeline**: a table of Elapsed | Clock | Layer | Who | What happened. One row per meaningful event, not per tool call.
+4. **Prompts (verbatim)**: every human prompt exactly as written, typos included, numbered, with its time. Include mid-turn messages and rejection reasons, and mark them as such.
+5. **Constraints**: what the human said the output must reflect (style, standards, audience, limits). Tag H.
+6. **Course-corrections (⚠)**: one numbered entry per ⚠ row.
+7. **Attribution summary**: first the **forks**, the points where the result went one way because of the human (a constraint, a call, a correction). Expect the AI to have written most of the words; the forks are what show where the result depended on the human. Then **H** (the human's other contributions), **AI**, and anything unresolved.
+8. **Observations**: strengths and weaknesses for both sides, each tied to a time. A strengths-only list isn't honest.
+9. **Time summary**: phases with window, minutes and layer, then active time and gap time as separate totals. Gaps are the time between the AI finishing and the human's next prompt: reading, reviewing, thinking and typing. Compute them from the timestamps; a total in the transcript header is a rounded cross-check.
+10. **What the transcript can't show**: one or two lines. Work done outside the chat, what the human read or decided offline, anything that shaped the result but left no trace here.
+
+**Then report back.** Open your reply with the At a glance sentence and table, so the human gets the summary without opening the log. Then end with at most three short questions the transcript can't settle, picking the ones whose answers would change the log most: a tag, a correction, or an open fact the result depends on. For example: "At 14:03, had you already planned the one-page limit, or did the draft prompt it?" Update the log with the answers. If the human skips them, leave the log as is.
 
 **`retrospective.md`, when asked**
 Draft it after the questions are answered or skipped. One page, in the human's voice (first person), written for whoever will read it, built only from the log. Sections: **What it helped with**, **Where I stepped in** (the ⚠ entries, compressed; group repeats), **What I did myself** (lead with the forks), **Where it could have misled me** (unverified claims, confident output ahead of checking), **What I'd change next time**. Open with one line: the tool, minutes elapsed and active, number of prompts and course-corrections, and that the full log is available on request. No audit-trail material: no tags, timeline rows or verbatim prompts.

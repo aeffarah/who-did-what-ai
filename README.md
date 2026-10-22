@@ -98,7 +98,7 @@ The AI keeps the log as you go. It costs more, but the instructions also change 
 | Path | What it is |
 |---|---|
 | [`skills/who-did-what/`](skills/who-did-what/) | After the fact: the Claude Code skill, the transcript condenser, and the prompt that builds the log |
-| [`template/session_log.md`](template/session_log.md) | The full record: timeline, verbatim prompts, corrections, attribution, time |
+| [`template/session_log.md`](template/session_log.md) | The full record: an at-a-glance summary table, then timeline, verbatim prompts, corrections, attribution, time |
 | [`template/retrospective.md`](template/retrospective.md) | The one-page version you share |
 | [`template/working_notes.md`](template/working_notes.md) | Scratchpad for the work itself, kept out of the log |
 | [`setup/instructions.md`](setup/instructions.md) | Live: drop-in instructions that make the AI keep the log |
