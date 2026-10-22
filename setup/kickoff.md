@@ -20,7 +20,7 @@ Give it the source material and tell it explicitly not to act yet.
 
 ## 3. Give it T0 and your constraints
 
-The AI starts the log on its own. Give it your stopwatch start time, and tell it what the output has to reflect about you.
+Give it your stopwatch start time, and tell it what the output has to reflect about you. In live mode the AI starts the log on its own; after the fact, the transcript picks up both.
 
 > I want to keep track of things such as my prompt engineering, where my brain went vs what you contributed [...] And I want it to honestly reflect my strengths and weaknesses and how I work.
 

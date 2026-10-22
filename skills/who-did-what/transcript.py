@@ -283,7 +283,7 @@ def main():
             sys.exit("No sessions found.")
         if args.list:
             for f in found:
-                first = next((x for _, k, x in events(f) if k == "prompt"), "")
+                first = next((x for _, k, x in events(f) if k == "prompt" or (k == "command" and x != "/clear")), "")
                 when = datetime.fromtimestamp(f.stat().st_mtime).strftime("%Y-%m-%d %H:%M")
                 print(f"{when}  {f}\n                  {one_line(first, 90)}")
             return

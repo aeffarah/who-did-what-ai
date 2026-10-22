@@ -65,7 +65,8 @@ There are two ways to run it. Start with after the fact: there's nothing to set 
    Copy-Item -Recurse skills\who-did-what "$HOME\.claude\skills\"
    ```
 
-   If `/who-did-what` isn't recognized afterwards, start a new Claude Code session.2. **Work normally.** No setup, no instructions, no logging.
+   If `/who-did-what` isn't recognized afterwards, start a new Claude Code session.
+2. **Work normally.** No setup, no instructions, no logging.
 3. **When you're done, run `/who-did-what`**, either at the end of that session or in a new session in the same folder (or name the folder: `/who-did-what ~/my-project`). In a new session it lists your recent sessions and asks which one to log. Then it condenses the transcript with real timestamps, builds the log, and asks you up to three questions the transcript can't answer. It reads only the transcript and that session's folder.
 4. **Ask for the retrospective**, then go through [reading your log](guides/reading-your-log.md).
 
@@ -124,7 +125,8 @@ Because the log is timestamped, it can show when an AI starts to slide over a lo
 I'm a product manager, not an engineer. This has been tested on two kinds of session: a timed analysis-and-writing exercise and a short planning task. It works for those. Everything below is an open question, not a feature. Try it, break it, and tell me what happened.
 
 - **After the fact on long sessions.** Tested on two short sessions so far by building logs from their transcripts and comparing them with the logs kept live. The after-the-fact logs found the same course-corrections and *unasked* decisions, with exact times instead of estimates. One also caught the AI overstating its own active time, which the live log had taken at its word. Long sessions are untested. The condenser cuts each tool call to one line and drops tool output, so a session of a few hundred turns should still fit, but that's unproven.
-- **Heavy coding sessions.** Untested. After the fact removes the main friction (logging every event over hundreds of tool calls). Still open: a log in the repo root ends up in commits, so write it somewhere git-ignored; and whether one line per tool call is the right grain for agentic runs.
+- **Heavy coding sessions.** Untested. After the fact removes the main friction (logging every event over hundreds of tool calls), and the skill offers to git-ignore its files when the folder is a repo. Still open: whether one line per tool call is the right grain for agentic runs.
+- **macOS and Linux.** Built and tested on Windows. The script is plain Python and should work anywhere Claude Code does, but hasn't been run there yet.
 - **Retrospective as a PR note.** A short "how AI was used" section in a pull request.
 - **Drift over long sessions.** See [above](#drift-experimental).
 
@@ -132,7 +134,7 @@ If you try it on a kind of session I haven't, especially coding, open an issue w
 
 ## Works with
 
-Built and tested with [Claude Code](https://claude.com/claude-code), which saves transcripts with timestamps, so after the fact works best there. Everything else is plain Markdown, so any assistant works: paste a copied conversation into [`build-log.md`](skills/who-did-what/build-log.md), or for live mode in a chat without file access, the AI ends each reply with the new log rows and you paste them into your copy.
+Built and tested with [Claude Code](https://claude.com/claude-code), which saves transcripts with timestamps, so after the fact works best there. Everything else is plain Markdown, so any assistant works (see [Any other assistant](#after-the-fact-recommended)). For live mode in a chat without file access, the AI ends each reply with the new log rows and you paste them into your copy.
 
 ## License
 
