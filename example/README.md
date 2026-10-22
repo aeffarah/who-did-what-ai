@@ -13,4 +13,4 @@ The headline numbers are in the [main README](../README.md#what-it-found-the-fir
 
 ## What was sanitized
 
-The company, the exercise text and platform-specific claims are removed or generalized. Redactions in the verbatim prompts are marked with [square brackets]. The exercise PDF, the brief and the working notes aren't included. Tag and layer names have been updated to the repo's scheme. Nothing else was changed.
+The company, the exercise text and platform-specific claims are removed or generalized. Redactions in the verbatim prompts are marked with [square brackets]. The exercise PDF, the brief and the working notes aren't included. Tag and layer names have been updated to the repo's scheme. The retrospective originally said the AI wrote "done" before checking twice; the log records it once, so the retrospective now says once. Nothing else was changed.

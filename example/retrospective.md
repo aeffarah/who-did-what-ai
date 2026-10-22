@@ -1,6 +1,6 @@
 ## How I used AI
 
-> **Sanitized.** This is the "how I used AI" page from the final deliverable of the session in [`session_log.md`](session_log.md), with company and platform details generalized.
+> **Sanitized.** This is the "how I used AI" page from the final deliverable of the session in [`session_log.md`](session_log.md), with company and platform details generalized and one count corrected to match the log.
 
 Claude Code in a terminal, timer running from the first message, a two-layer log kept throughout (the problem, and how I ran the exercise). About 137 minutes elapsed, roughly 77 of them active; the rest was me reading and thinking between turns. Fifteen prompts, seven course-corrections. The full log is available on request.
 
@@ -22,7 +22,7 @@ Claude Code in a terminal, timer running from the first message, a two-layer log
 
 ### Where it could have misled me
 - The platform claims are unverified and plausible-sounding, the dangerous combination. If that assumption is wrong, the cancellation reframe collapses and section 1 reverts to my original read.
-- Smaller, same pattern: it twice wrote "done" into the log before checking its own output.
+- Smaller, same pattern: it wrote "done" into the log before checking its own output.
 
 ### What I'd change next time
 - This is wordier than I'd ship. The exercise asks how I think, so the reasoning is on the page. Inside an organization the context already exists, and two dense pages is something people revolt at on sight.
