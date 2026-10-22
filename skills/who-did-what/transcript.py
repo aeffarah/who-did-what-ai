@@ -282,7 +282,8 @@ def render(path, max_reply, input_chars, result_lines):
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("target", nargs="?", default=".", help="a .jsonl transcript, or a working folder (default: current folder)")
-    ap.add_argument("-o", "--output", help="write to this file instead of the screen")
+    ap.add_argument("-o", "--output", help="write to this file instead of the screen (never overwrites, unless --force)")
+    ap.add_argument("--force", action="store_true", help="let -o overwrite an existing file")
     ap.add_argument("--list", action="store_true", help="list sessions for the folder, newest first")
     ap.add_argument("--max-reply", type=int, default=3000, help="clip each AI reply to this many characters (0 = no limit)")
     ap.add_argument("--inputs", type=int, default=0, metavar="N",
@@ -290,6 +291,9 @@ def main():
     ap.add_argument("--results", type=int, default=0, metavar="N",
                     help="also show the last N lines of each shell command's output (Bash, PowerShell)")
     args = ap.parse_args()
+
+    if args.output and Path(args.output).exists() and not args.force:
+        sys.exit(f"{args.output} already exists. Pick another name, or pass --force to overwrite it.")
 
     target = Path(args.target).expanduser()
     if target.suffix == ".jsonl":
