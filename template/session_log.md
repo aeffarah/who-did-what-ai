@@ -43,6 +43,7 @@
 
 ## Attribution summary
 
+- **Forks (where the result depended on H):** 
 - **H:** 
 - **AI:** 
 

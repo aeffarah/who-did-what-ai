@@ -4,9 +4,11 @@
 
 ## Why
 
-AI-assisted work blurs authorship. Afterwards it's hard to say honestly which ideas were yours, which were the model's, and where you saved it from itself. Memory is generous to whoever is doing the remembering. A raw transcript is accurate but nobody will read it.
+AI should be co-building: drafting, spitballing, filling gaps. That's the point. But the result still depends on who's steering. Give the same tool to a hundred people and you get a hundred different outcomes.
 
-This sits in between: a running log the AI keeps while you work, tagged by who contributed what, then distilled into a one-page retrospective.
+The hard part is seeing where yours depended on you. Memory is generous to whoever is doing the remembering, and a raw transcript is accurate but nobody will read it. This sits in between: a running log the AI keeps while you work, tagged by who contributed what, then distilled into a one-page retrospective.
+
+The AI will probably write most of the words. The log shows the forks: the constraints you set, the calls you made, and the corrections you caught, which together sent the result your way and not somewhere else.
 
 ## What it found the first time
 
@@ -38,10 +40,12 @@ Every log entry gets a **layer** and a **tag**.
 
 Course-corrections are the most valuable part. Each one records what the AI was optimizing for, what you were optimizing for, and the pattern. Over a session those patterns show you where you add value and where the AI reliably drifts.
 
+The tags are the AI's reading of the session, not a verdict. Every prompt is logged verbatim, so you can check any tag against what was actually said, and correct it.
+
 ## Quickstart
 
 1. **Copy [`template/`](template/)** into a fresh folder for the session.
-2. **Give your AI the instructions** in [`setup/instructions.md`](setup/instructions.md). Use `CLAUDE.md` for Claude Code, `AGENTS.md`, custom instructions, or just paste it as your first message.
+2. **Give your AI the instructions** in [`setup/instructions.md`](setup/instructions.md). Use `CLAUDE.md` for Claude Code, `AGENTS.md`, custom instructions, or just paste it as your first message. Your global instructions and connectors still load, so if they have opinions about where output goes, the session instructions settle it.
 3. **Start a timer** and open with the [kickoff moves](setup/kickoff.md).
 4. **Work normally.** The AI logs each turn. Correct it when a tag is wrong, since a mis-tagged entry is itself worth logging.
 5. **At the end, ask for the retrospective**, then go through [reading your log](guides/reading-your-log.md).
@@ -55,7 +59,7 @@ Course-corrections are the most valuable part. Each one records what the AI was 
 | [`template/working_notes.md`](template/working_notes.md) | Scratchpad for the work itself, kept out of the log |
 | [`setup/instructions.md`](setup/instructions.md) | Drop-in instructions that make the AI keep the log |
 | [`setup/kickoff.md`](setup/kickoff.md) | The opening moves that set up a session well |
-| [`guides/reading-your-log.md`](guides/reading-your-log.md) | Questions to ask of a finished log |
+| [`guides/reading-your-log.md`](guides/reading-your-log.md) | Where it depended on you, the default-path comparison, and spotting drift |
 | [`guides/use-cases.md`](guides/use-cases.md) | Assessments, project work, debugging, learning, writing |
 | [`example/`](example/) | A real session, sanitized |
 
@@ -67,9 +71,13 @@ Course-corrections are the most valuable part. Each one records what the AI was 
 - **Verify before "done."** The AI doesn't record a result until it has checked it.
 - **Your clock is authoritative.** Active time and time spent reading between turns are counted separately.
 
+## Drift (experimental)
+
+Because the log is timestamped and lives on disk, it can show when an AI starts to slide over a long session: repeated corrections, things you removed coming back, constraints that stop being followed. The instructions also use the log as an anchor, with the AI re-reading your constraints and corrections before every revision. This part is untested on long sessions. If you run one, your log is the evidence it needs. See [spotting drift](guides/reading-your-log.md#spotting-drift-experimental).
+
 ## Works with
 
-Built and tested with [Claude Code](https://claude.com/claude-code). Everything is plain Markdown, so any assistant that can edit files works, as does one you paste into.
+Built and tested with [Claude Code](https://claude.com/claude-code). Everything is plain Markdown, so any assistant that can edit files works. In a plain chat without file access, the AI ends each reply with the new log rows and you paste them into your copy.
 
 ## License
 
