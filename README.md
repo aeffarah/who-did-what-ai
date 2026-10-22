@@ -63,7 +63,7 @@ There are two ways to run it. Start with after the fact: there's nothing to set 
 
    If `/who-did-what` isn't recognized afterwards, start a new Claude Code session.
 2. **Work normally.** No setup, no instructions, no logging.
-3. **When you're done, run `/who-did-what`**, either at the end of that session or in a new session in the same folder (or name the folder: `/who-did-what ~/my-project`). In a new session it lists your recent sessions and asks which one to log. Then it condenses the transcript with real timestamps, builds the log, and asks you up to three questions the transcript can't answer. It reads only the transcript and that session's folder.
+3. **When you're done, start a new session in the same folder and run `/who-did-what`** (or name the folder: `/who-did-what ~/my-project`). A new session matters: the AI that did the work shouldn't be the one grading it, so if you run it in the same session it will ask you to switch. It lists your recent sessions and asks which one to log. Then it condenses the transcript with real timestamps, builds the log, and asks you up to three questions the transcript can't answer. It reads only the transcript and that session's folder.
 4. **Ask for the retrospective**, then go through [reading your log](guides/reading-your-log.md).
 
 Claude Code deletes transcripts after 30 days by default, so build the log within a month.

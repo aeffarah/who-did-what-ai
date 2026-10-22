@@ -11,7 +11,7 @@ Usage:
     python transcript.py                   # latest session for the current folder
     python transcript.py <folder>          # latest session for that working folder
     python transcript.py <file.jsonl>      # a specific session
-    python transcript.py --list [<folder>] # list sessions, newest first
+    python transcript.py --list [<folder>] # list sessions, newest first, with start time and first prompt
     python transcript.py ... -o transcript.md
     python transcript.py ... --inputs 400  # also show what the AI wrote, clipped
 
@@ -283,9 +283,18 @@ def main():
             sys.exit("No sessions found.")
         if args.list:
             for f in found:
-                first = next((x for _, k, x in events(f) if k == "prompt" or (k == "command" and x != "/clear")), "")
-                when = datetime.fromtimestamp(f.stat().st_mtime).strftime("%Y-%m-%d %H:%M")
-                print(f"{when}  {f}\n                  {one_line(first, 90)}")
+                start, first = None, ""
+                for t, k, x in events(f):
+                    start = start or t
+                    if k == "prompt" or (k == "command" and x != "/clear"):
+                        first = x
+                        break
+                end = datetime.fromtimestamp(f.stat().st_mtime).astimezone()
+                start = start or end
+                # The file's modified time is when the session last changed, not when it started.
+                span = f"{start:%Y-%m-%d %H:%M} to {end:%H:%M}" if start.date() == end.date() \
+                    else f"{start:%Y-%m-%d %H:%M} to {end:%Y-%m-%d %H:%M}"
+                print(f"{span}  {f}\n{' ' * (len(span) + 2)}{one_line(first, 90)}")
             return
         session = found[0]
 
