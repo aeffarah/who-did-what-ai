@@ -14,7 +14,7 @@ The log format stays the same. What changes is what the WORK layer covers, who r
 
 ## Picking a size
 
-Not every session needs every section.
+Not every session needs every section. The instructions default to Standard; to use another size, tell the AI at the start.
 
 - **Light:** timeline and course-corrections only. Good for short sessions or debugging.
 - **Standard:** the full template. Good for anything you'll show someone.

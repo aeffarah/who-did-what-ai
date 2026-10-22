@@ -18,9 +18,9 @@ Give it the source material and tell it explicitly not to act yet.
 
 **Why:** it separates understanding from doing. You get to see how the AI reads the task before it commits to a direction, which is also your first chance to check its interpretation against yours.
 
-## 3. Start the log and state your constraints
+## 3. Give it T0 and your constraints
 
-Have it create the log, give it T0, and tell it what the output has to reflect about you.
+The AI starts the log on its own. Give it your stopwatch start time, and tell it what the output has to reflect about you.
 
 > I want to keep track of things such as my prompt engineering, where my brain went vs what you contributed [...] And I want it to honestly reflect my strengths and weaknesses and how I work.
 

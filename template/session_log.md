@@ -16,6 +16,8 @@
 - **AI→H** = AI proposed, human decided
 - **⚠ H** = human overrode or redirected the AI (course-correction)
 
+Markers: *unasked* (AI decided something it wasn't asked to), *repeat* (same kind of correction as an earlier one), *reintroduced* (something removed or corrected came back)
+
 ## Timeline
 
 <!-- One row per meaningful event. Use ~ for estimated times. Log AI errors and tool friction too. -->
@@ -37,7 +39,7 @@
 
 ## Course-corrections (⚠)
 
-<!-- One entry per ⚠ in the timeline. What the AI did, what the human did instead, what each was optimizing for, and the pattern if one is emerging. -->
+<!-- One entry per ⚠ in the timeline. What the AI did, what the human did instead, what each was optimizing for, and the pattern if one is emerging. Mark repeats *repeat* and name the earlier entry. -->
 
 1. **HH:MM: <short name>.** 
 

@@ -19,7 +19,7 @@ The [worked example](example/) is a timed PM take-home: 137 minutes, 15 prompts,
 - **6 of 7 corrections were about form, not substance.**
 - **About 20 of 77 active minutes went to the actual problem.** Most of the rest was restructuring after the content had stopped changing.
 - **The AI's recurring failure was completeness.** It kept optimizing to fill or fit the page. The human's recurring correction was "who reads this, and how much will they read."
-- **The AI twice wrote "done" into the log before checking its own output.**
+- **The AI wrote "done" into the log before checking its own output**, then caught it and corrected the entry.
 
 None of that is visible in the finished deliverable. All of it is visible in the log.
 
@@ -41,6 +41,8 @@ Every log entry gets a **layer** and a **tag**.
 | **⚠ H** | You overrode or redirected the AI (a course-correction) |
 
 Course-corrections are the most valuable part. Each one records what the AI was optimizing for, what you were optimizing for, and the pattern. Over a session those patterns show you where you add value and where the AI reliably drifts.
+
+Three markers flag patterns worth counting: *unasked* (the AI decided something you didn't ask it to), *repeat* (a correction you've made before), and *reintroduced* (something you removed came back).
 
 The tags are the AI's reading of the session, not a verdict. Every prompt is logged verbatim, so you can check any tag against what was actually said, and correct it.
 
@@ -81,7 +83,7 @@ Because the log is timestamped and lives on disk, it can show when an AI starts 
 
 I'm a product manager, not an engineer. This has been tested on two kinds of session: a timed analysis-and-writing exercise and a short planning task. It works for those. Everything below is an open question, not a feature. Try it, break it, and tell me what happened.
 
-- **Heavy coding sessions.** Untested. Likely friction: logging every event gets expensive over hundreds of tool calls, and the log could eat the context it's meant to protect. "Outline first, then wait" conflicts with letting an agent run, and a log in the repo root ends up in commits. Some ideas: a light mode that logs only your turns, forks and corrections; a git-ignored log folder; commit hashes instead of descriptions of edits.
+- **Heavy coding sessions.** Untested. Likely friction: logging every event gets expensive over hundreds of tool calls, and the log could eat the context it's meant to protect. "Outline first, then wait" conflicts with letting an agent run, and a log in the repo root ends up in commits. Some ideas: a leaner version of the [Light size](guides/use-cases.md#picking-a-size) that logs only your turns, forks and corrections; a git-ignored log folder; commit hashes instead of descriptions of edits.
 - **Post-hoc logging.** Build the log from a saved transcript after the session instead of live. There's no overhead, and the AI doesn't know it's being watched.
 - **Retrospective as a PR note.** A short "how AI was used" section in a pull request.
 - **Drift over long sessions.** See [above](#drift-experimental).

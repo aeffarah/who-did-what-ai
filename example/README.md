@@ -9,12 +9,7 @@ The first session logged with this format. The exercise was to diagnose checkout
 
 **Read the retrospective first,** then the log's course-corrections if you want the detail behind it.
 
-## The short version
-
-- 137 minutes elapsed, about 77 active: ~12 setup, ~20 substance, ~45 format.
-- 7 course-corrections, 6 of them on form.
-- The AI kept optimizing for completeness and fitting the page. The human kept optimizing for the reader.
-- The fix the log pointed to was a template, which is what this repo is.
+The headline numbers are in the [main README](../README.md#what-it-found-the-first-time). The log's main finding was that a template would fix most of the time lost to format. This repo is that template.
 
 ## What was sanitized
 
